@@ -1,0 +1,24 @@
+Docker Installation:
+$ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+$ sudo yum install docker-ce docker-ce-cli containerd.io
+
+Install Cloudify using Docker Image:
+$ sudo docker run --name cfy_manager -d --restart unless-stopped -v /sys/fs/cgroup:/sys/fs/cgroup:ro --tmpfs /run --tmpfs /run/lock --security-opt seccomp:unconfined --cap-add SYS_ADMIN --network host -p 80:80 -p 8000:8000 cloudifyplatform/premium-cloudify-manager-aio:latest
+
+$ sudo docker ps --> to check the status of container
+
+KeyPoints:
+1) Register in cloudify website to get license for Enterprise version.
+2) Make sure to have Static IP (Elastic IP), if needed to access cloudify via internet.
+3) During each each reboot of the VM docker needs to be started (sudo systemctl start docker)
+
+Download and Install CLI:
+URL : https://cloudify.co/getting-started-enterprise/#packages
+
+$ sudo rpm -i <pkg.rpm>
+$ cfy profiles use localhost -u admin -p admin -t default_tenant
